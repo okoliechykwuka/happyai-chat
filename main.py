@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel, Field
+from fastapi.middleware.cors import CORSMiddleware  # Add this import
 from typing import Optional
 from datetime import datetime
 import uvicorn
@@ -36,6 +37,15 @@ app = FastAPI(
     description="API for interacting with HappyAI's customer support assistant",
     version="1.0.0",
     lifespan=lifespan
+)
+
+# Add CORS middleware configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
 
 @app.get("/health", 
